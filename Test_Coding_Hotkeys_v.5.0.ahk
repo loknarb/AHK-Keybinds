@@ -14,8 +14,7 @@ SetCapsLockState, AlwaysOff
 !c::Send {F15} ;!n = f15 cursor home
 !+n::Send {F16} ; !+c = f16 cursor end select
 !+c::Send {F17} ; !+n = f17 cursor home select
-!v::Send {F18} ; !v = f18 goto bracket
-!g::Send {F19} ; !g = f19 backspace
+ ; !v = f18 goto bracket
 !h::Send {Delete} ; !h = f21 delete
 !a::Send (
 !d::Send )
@@ -23,6 +22,7 @@ SetCapsLockState, AlwaysOff
 !+d::Send ]
 !+f::Send '
 !f::Send "
+#If, !GetKeyState("CapsLock", "P")
 !j::Send {{}
 !k::Send {}}
 !s::Send :
@@ -32,11 +32,24 @@ SetCapsLockState, AlwaysOff
 !e::Send ||
 !+q::Send <
 !+e::Send >
-CapsLock & j::Send {Left} 
-CapsLock & i::Send {Up}
-CapsLock & k::Send {Down} 
-CapsLock & l::Send {Right}
+CapsLock::return
 
+#If, GetKeyState("CapsLock", "P")
+; VIM section KIJL
+i::Send {Up}
+k::Send {Down} 
+l::Send {Right}
+j::Send {Left} 
+!i:: Send {F18}
+!k:: Send {F19}
++i:: Send {ShiftDown}{F18}{ShiftUp}
++k:: Send {ShiftDown}{F19}{ShiftUp}
++l:: Send {ShiftDown}{Right}{ShiftUp}
++j:: Send {ShiftDown}{Left}{ShiftUp}
+!+i:: Send {ShiftDown}{AltDown}{F18}{AltUp}{ShiftUp}
+!+k:: Send {ShiftDown}{AltDown}{F19}{AltUp}{ShiftUp}
+!+j:: Send {ShiftDown}{AltDown}{Left}{AltUp}{ShiftUp}
+!+l:: Send {ShiftDown}{AltDown}{Right}{AltUp}{ShiftUp}
 ; Tranforms -> into →
 ::->::{U+2192}
 ;# ALT A = (
