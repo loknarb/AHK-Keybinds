@@ -5,7 +5,19 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2 ; Title can be part of the full title
 SetCapsLockState, AlwaysOff
 ^!+z::  Winset, Alwaysontop, , A
-
+#If, GetKeyState("CapsLock", "P")
+^l::Send {CtrlDown}{LWinDown}{Right}{LWinUp}{CtrlUp}
+^j::Send {CtrlDown}{LWinDown}{Left}{LWinUp}{CtrlUp}
+; VIM section KIJL
+i::Send {Up}
+k::Send {Down}
+l::Send {Right}
+j::Send {Left} 
+#if getkeystate("lwin")
+j::left
+i::up
+k::down
+l::right
 
 #IfWinActive ahk_exe code.exe
 !Space::Return
@@ -35,11 +47,6 @@ SetCapsLockState, AlwaysOff
 CapsLock::return
 
 #If, GetKeyState("CapsLock", "P")
-; VIM section KIJL
-i::Send {Up}
-k::Send {Down} 
-l::Send {Right}
-j::Send {Left} 
 !i:: Send {F18}
 !k:: Send {F19}
 +i:: Send {ShiftDown}{F18}{ShiftUp}
